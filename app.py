@@ -1,6 +1,4 @@
 import streamlit as st
-from gTTS import gTTS
-import io
 
 # 1. Sahifa sozlamalari
 st.set_page_config(
@@ -8,17 +6,6 @@ st.set_page_config(
     page_icon="🩺",
     layout="wide"
 )
-
-# Ovoz chiqarish funksiyasi
-def speak(text, lang='uz'):
-    try:
-        tts = gTTS(text=text, lang=lang)
-        fp = io.BytesIO()
-        tts.write_to_fp(fp)
-        fp.seek(0)
-        st.audio(fp, format='audio/mp3', autoplay=True)
-    except Exception as e:
-        st.error("Ovozni ijro etishda xatolik yuz berdi.")
 
 # 2. Tilni tanlash menyusi
 st.sidebar.title("🌍 Tilni tanlang / Выберите язык")
@@ -38,12 +25,11 @@ if til == "Oʻzbekcha":
         [
             "⚡ Shoshilinch yordam", 
             "🧪 Klinik keyslar (Test)", 
-            "📚 SanPiN va Koʻnikmalar", 
-            "🎙 Ovozli Shifokor-Hamshira Simulyatsiyasi" # YANGI BO'LIM!
+            "📚 SanPiN va Koʻnikmalar"
         ]
     )
 
-    # 1-BO'LIM: Shoshilinch yordam (Oldingi saqlangan bo'lim)
+    # 1. Shoshilinch yordam
     if bolim == "⚡ Shoshilinch yordam":
         st.header("⚡ Shoshilinch tibbiy yordam koʻrsatish algoritmlari")
         
@@ -59,7 +45,7 @@ if til == "Oʻzbekcha":
                 st.info("1. Koʻkrak qafasi kompressiyasi: daqiqasiga 100-120 marta.")
                 st.info("2. Kompressiya va nafas nisbati — 30 : 2.")
 
-    # 2-BO'LIM: Klinik keyslar
+    # 2. Klinik keyslar
     elif bolim == "🧪 Klinik keyslar (Test)":
         st.header("🧪 Vaziyatli masalalar va test topshiriqlari")
         st.subheader("📌 Keys: Muolaja xonasida anafilaksiya")
@@ -78,43 +64,11 @@ if til == "Oʻzbekcha":
             else:
                 st.error("Notoʻgʻri! Adrenalin yuborilishi va dori toʻxtatilishi shart.")
 
-    # 3-BO'LIM: SanPiN
+    # 3. SanPiN
     elif bolim == "📚 SanPiN va Koʻnikmalar":
         st.header("📚 SanPiN me'yorlari va amaliy koʻnikmalar")
         st.subheader("🧹 Dezinfeksiya va Sterilizatsiya bosqichlari")
         st.write("1. Dezinfeksiya $\rightarrow$ 2. PEO (Presterilizatsion tozalash) $\rightarrow$ 3. Sterilizatsiya")
-
-    # 4-BO'LIM: YANGI OVOZLI SIMULYATSIYA!
-    elif bolim == "🎙 Ovozli Shifokor-Hamshira Simulyatsiyasi":
-        st.header("🎙 Shifokor va Hamshira oʻrtasidagi ovozli muloqot simulyatori")
-        st.info("Bu boʻlimda shifokor va hamshira oʻrtasidagi muloqotni ham matn, ham ovozli eshitish orqali mashq qilishingiz mumkin.")
-
-        mavzu = st.selectbox("Simulyatsiya mavzusini tanlang:", [
-            "Anafilaktik shok holati",
-            "Yurak toʻxtashi (CPR) holati"
-        ])
-
-        if mavzu == "Anafilaktik shok holati":
-            st.markdown("### 👨‍⚕️ Shifokor va 👩‍⚕️ Hamshira muloqoti:")
-            
-            st.chat_message("user").write("👨‍⚕️ **Shifokor:** Hamshira xonim, bemorda anafilaktik shok belgilari kuzatilyapti! Zudlik bilan harakat qiling!")
-            st.chat_message("assistant").write("👩‍⚕️ **Hamshira:** Tushundim, doktor! Dori yuborishni toʻxtatdim. Qanday dori tayyorlay?")
-            st.chat_message("user").write("👨‍⚕️ **Shifokor:** Zudlik bilan 0.5 ml 0.1 foizli Adrenalin tayyorlang va mushak orasiga yuboring!")
-
-            if st.button("Muloqotni ovozli eshitish 🔊"):
-                muloqot_matni = "Shifokor: Hamshira xonim, bemorda anafilaktik shok belgilari kuzatilyapti! Zudlik bilan 0.5 millilitr 0.1 foizli Adrenalin yuboring! Hamshira: Tushundim, doktor! Dori to'xtatildi va Adrenalin yuborilmoqda."
-                speak(muloqot_matni, lang='uz')
-
-        elif mavzu == "Yurak toʻxtashi (CPR) holati":
-            st.markdown("### 👨‍⚕️ Shifokor va 👩‍⚕️ Hamshira muloqoti:")
-            
-            st.chat_message("user").write("👨‍⚕️ **Shifokor:** Bemorda puls yoʻq! Zudlik bilan reanimatsiyani boshlaymiz!")
-            st.chat_message("assistant").write("👩‍⚕️ **Hamshira:** Doktor, soat qayd etildi. Koʻkrak qafasi kompressiyasini boshlaymanmi?")
-            st.chat_message("user").write("👨‍⚕️ **Shifokor:** Ha, 30 ta bosish va 2 ta nafas nisbatida davom eting!")
-
-            if st.button("Muloqotni ovozli eshitish 🔊"):
-                muloqot_matni = "Shifokor: Bemorda puls yo'q! Zudlik bilan reanimatsiyani boshlaymiz! Hamshira: Doktor, soat qayd etildi. Kompressiya 30 ga 2 nisbatda boshlanmoqda."
-                speak(muloqot_matni, lang='uz')
 
 # ==========================================
 # RUSCHA TIL INTERFEYSI
@@ -124,11 +78,15 @@ else:
     st.caption("Кокандский филиал Республиканского Центра повышения квалификации средних медработников")
     st.markdown("---")
 
-    st.header("🎙 Голосовая симуляция: Врач и Медсестра")
-    
-    st.chat_message("user").write("👨‍⚕️ **Врач:** Сестра, у пациента признаки анафилактического шока! Срочно прекратите введение лекарства!")
-    st.chat_message("assistant").write("👩‍⚕️ **Медсестра:** Поняла, доктор! Препарат остановлен. Готовлю Адреналин!")
+    st.header("⚡ Алгоритмы экстренной помощи")
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("💉 Анафилактический шок", use_container_width=True):
+            st.error("1. НЕМЕДЛЕННО прекратите введение препарата!")
+            st.warning("2. Обеспечьте проходимость дыхательных путей.")
+            st.success("3. Введите Адреналин 0.1% — 0.3-0.5 мл внутримышечно.")
 
-    if st.button("Прослушать диалог 🔊"):
-        dialog_ru = "Врач: Сестра, у пациента признаки анафилактического шока! Срочно прекратите введение лекарства! Медсестра: Поняла, доктор! Препарат остановлен. Готовлю Адреналин 0.1 percent!"
-        speak(dialog_ru, lang='ru')
+    with col2:
+        if st.button("🫀 Сердечно-легочная реанимация (СЛР)", use_container_width=True):
+            st.info("1. Частота компрессий грудной клетки: 100-120 в минуту.")
+            st.info("2. Соотношение компрессий и вдохов — 30 : 2.")
