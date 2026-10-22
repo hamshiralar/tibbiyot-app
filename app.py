@@ -149,4 +149,50 @@ if til == "Oʻzbekcha":
             if "B)" in j5:
                 st.success("Toʻgʻri! Bitta qoʻl yuzasi = 9%, koʻkrak qafasi old yuzasi = 9%. Jami: 18%.")
             else:
-                st.error("Notoʻgʻri!
+                st.error("Notoʻgʻri! Bir qoʻl (9%) + koʻkrak qafasi old qismi (9%) = 18% boʻladi.")
+
+    # 3. SANPIN VA AMALIY KO'NIKMALAR
+    elif bolim == "📚 SanPiN va Amaliy standartlar":
+        st.header("📚 SanPiN me'yorlari va aseptika rejimlari")
+        
+        tab1, tab2, tab3 = st.tabs(["🧹 Dezinfeksiya va Sterilizatsiya", "🧤 Qoʻllarni ishlov berish", "🗑 Tibbiy chiqindilar"])
+
+        with tab1:
+            st.subheader("Tibbiy asboblarni zararsizlantirish bosqichlari")
+            st.write("1. **Dezinfeksiya** — Asboblarni dezinfektor eritmasiga toʻliq botirib qoʻyish.")
+            st.write("2. **PEO (Presterilizatsion tozalash)** — Oqova suvda yuvish va quritish.")
+            st.write("3. **Sterilizatsiya** — Avtoklav (134°C) yoki Suxojar (180°C) shkafida zararsizlantirish.")
+
+        with tab2:
+            st.subheader("Qoʻllarni ishlov berish (EN-1500 standarti)")
+            st.write("• Kaftlarni kaftga ishqash")
+            st.write("• Kaft bilan ikkinchi qoʻl orqa qismini yuvish")
+            st.write("• Barmoqlar orasini ishqash")
+            st.write("• Bosh barmoqlarni aylana harakat bilan tozalash")
+
+        with tab3:
+            st.subheader("Tibbiy chiqindilarni saralash (Klassifikatsiya)")
+            st.error("🔴 **A-sinf (Xavfsiz):** Maishiy chiqindilar, qogʻozlar, oziq-ovqat qoldiqlari.")
+            st.warning("🟡 **B-sinf (Xavfli):** Qon va biologik suyuqlik tekkan materiallar, shpritslar, ignalar.")
+            st.info("🟡 **V-sinf (Favqulodda xavfli):** Mikrobiologik laboratoriya va yuqumli kasalliklar chiqindilari.")
+
+# ==========================================
+# RUSCHA TIL INTERFEYSI
+# ==========================================
+else:
+    st.title("🩺 Интерактивный медицинский симулятор")
+    st.caption("Кокандский филиал Республиканского Центра повышения квалификации средних медработников")
+    st.markdown("---")
+
+    st.header("⚡ Алгоритмы экстренной помощи")
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("💉 Анафилактический шок", use_container_width=True):
+            st.error("1. НЕМЕДЛЕННО прекратите введение препарата!")
+            st.warning("2. Обеспечьте проходимость дыхательных путей.")
+            st.success("3. Введите Адреналин 0.1% — 0.3-0.5 мл внутримышечно.")
+
+    with col2:
+        if st.button("🫀 Сердечно-легочная реанимация (СЛР)", use_container_width=True):
+            st.info("1. Частота компрессий грудной клетки: 100-120 в минуту.")
+            st.info("2. Соотношение компрессий и вдохов — 30 : 2.")
